@@ -1,60 +1,39 @@
 from tkinter import *
-from tkinter import filedialog
-import os
-import subprocess
+import requests
 
-class api(Frame):
+class Api(Frame):
     def __init__(self, master, *args, **kwargs):
         Frame.__init__(self, master, *args, **kwargs)
 
         self.master = master
-        self.master.title('Automation')
-        self.master.resizable(width=False, height=False)
-        self.master.geometry('400x200')
+        self.master.title('Github credentials')
+        self.master.geometry('200x150')
 
         frame = Frame(self.master)
         frame.pack()
 
-        label_folder = Label(frame, text='Choose where to create your project')
-        label_folder.pack(side=TOP)
+        label_username = Label(frame, text='Username')
+        label_username.pack()
 
-        select_folder = Button(frame, text='Choose Folder', width=20, height=2, command=lambda: choose_folder())
-        select_folder.pack()
+        username = Entry(frame)
+        username.pack()
 
-        project_name = Entry(frame, width=20, bd=1)
-        project_name.pack(side=LEFT)
+        label_password = Label(frame, text='Password')
+        label_password.pack()
 
-        create_project_folder = Button(frame, text='Create', width=20, height=1, command=lambda: create_project(project_name.get()))
-        create_project_folder.pack(side=RIGHT)
+        password = Entry(frame)
+        password.pack()
 
-def choose_folder():
-    folder = filedialog.askdirectory(parent=main,
-                                     initialdir=os.getcwd(),
-                                     title="Select projects folder:")
-    with open('init.bat', 'r') as file:
-        # read list of lines
-        data = file.readlines()
-    # add directory
-    data[0] = 'cd '+folder + '\n'
-    print(data)
+        submit = Button(frame, text='SUBMIT', command=lambda: api_conn(username.get(), password.get()))
+        submit.pack()
 
-    with open('init.bat', 'w') as file:
-        file.writelines(data)
+def api_conn(username, password):
+    # get_api = requests.get('https://api.github.com/user', auth=(username, password))
+    post_api = requests.post('https://api.github.com/user/repos', auth=(username, password))
+    # print(get_api.json())
+    print(post_api.json())
 
-def create_project(project_name):
-    with open('init.bat', 'r') as file:
-        # read list of lines
-        data = file.readlines()
-    # create directory
-    data[1] = 'mkdir ' + project_name + '\n'
-    data[2] = 'cd ' + project_name + '\n'
-
-    with open('init.bat', 'w') as file:
-        file.writelines(data)
-    # init project creation
-    subprocess.call([r'init.bat'])
-
-
-main = Tk()
-open_folder = api(main)
-main.mainloop()
+if __name__ == '__main__':
+    main = Tk()
+    conn = Api(main)
+    main.mainloop()
