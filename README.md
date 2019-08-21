@@ -1,14 +1,13 @@
 # Quick start project automation
 
-Git-init-automation helped me further learn technologies like Selenium Webdriver, sqlite and batch files. 
+Git-init-automation helped me further learn technologies like Selenium Webdriver, sqlite and windows batch files. 
 
-The git-init-automation application will be able to create project folder with specified name, navigate through the github, sign in, and and upload project as a repository. 
+The git-init-automation application will be able to create project folder with specified name, navigate through github website, sign in, and and upload project as a repository. 
 
 ## Road-map
 
-- Create project folder
-- 
-
-## License
-
-This project is licensed under the GNU General Public License v3.0 License - see the [LICENSE.md](LICENSE.md) file for details
+- Navigate to github login page
+- Login into github
+- Create repositiory with same name as project folder
+- Copy remote github repository link
+- Connect project folder to remote repository
