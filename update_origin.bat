@@ -1,5 +1,4 @@
-git remote add origin https://github.com/eretana238/test.git
-git remote add origin
+cd test
 git remote add origin https://github.com/eretana238/test.git
 git add .
 git commit -m "first commit"
