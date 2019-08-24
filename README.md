@@ -4,10 +4,15 @@ Git-init-automation helped me further learn technologies like Selenium Webdriver
 
 The git-init-automation application will be able to create project folder with specified name, navigate through github website, sign in, and and upload project as a repository. 
 
-## Road-map
+## Get started
 
-- Navigate to github login page
-- Login into github
-- Create repositiory with same name as project folder
-- Copy remote github repository link
-- Connect project folder to remote repository
+Install Python latest version - https://www.python.org/downloads/
+
+Install all modules used in the software:
+```
+pip install -r requirements.txt
+```
+Lastly run `main.py` to start the software as demonstrated below:
+```
+py main.py
+```
