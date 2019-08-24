@@ -1,40 +1,30 @@
-from tkinter import *
 from selenium import webdriver
-class Conn(Frame):
-    def __init__(self, master, *args, **kwargs):
-        Frame.__init__(self, master, *args, **kwargs)
+import time
 
-        self.master = master
-        self.master.title('Github credentials')
-        self.master.geometry('200x150')
-
-        frame = Frame(self.master)
-        frame.pack()
-
-        label_username = Label(frame, text='Username')
-        label_username.pack()
-
-        username = Entry(frame)
-        username.pack()
-
-        label_password = Label(frame, text='Password')
-        label_password.pack()
-
-        password = Entry(frame)
-        password.pack()
-
-        submit = Button(frame, text='SUBMIT', command=lambda: api_conn(username.get(), password.get()))
-        submit.pack()
-
-def api_conn(username, password):
+def browse(username, password, project_name):
     url = 'https://www.github.com/login'
     browser = webdriver.Chrome()
     browser.get(url)
+    # inserts user info at login
     login_user = browser.find_element_by_id('login_field')
     login_user.clear()
     login_user.send_keys(username)
+    pass_user = browser.find_element_by_id('password')
+    pass_user.clear()
+    pass_user.send_keys(password)
+    button = browser.find_element_by_name('commit')
+    button.click()
+    return create_repo(browser, project_name)
 
-if __name__ == '__main__':
-    main = Tk()
-    conn = Conn(main)
-    main.mainloop()
+def create_repo(browser, project_name):
+    browser.get('https://github.com/new')
+    # inserts project name
+    name = browser.find_element_by_id('repository_name')
+    name.send_keys(project_name)
+    time.sleep(2)
+    button = browser.find_element_by_css_selector('button.first-in-line')
+    button.submit()
+    # copy remote repository link
+    link = browser.find_element_by_xpath('//*[@id="empty-setup-clone-url"]')
+    return link.get_attribute('value')
+

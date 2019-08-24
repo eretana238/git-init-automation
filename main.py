@@ -2,6 +2,8 @@ from tkinter import *
 from tkinter import filedialog
 import os
 import subprocess
+import conn
+import time
 
 
 class Main(Frame):
@@ -39,7 +41,6 @@ def choose_folder():
         data = file.readlines()
     # add directory
     data[0] = 'cd ' + folder + '\n'
-    print(data)
 
     with open('create_folder.bat', 'w') as file:
         file.writelines(data)
@@ -58,10 +59,18 @@ def create_project(frame, project_name):
     # init project creation
     subprocess.call([r'create_folder.bat'])
     frame.destroy()
+    git = conn.browse('eretana238', 'ImAKnight61', project_name)
 
+    with open('update_origin.bat', 'r') as file:
+        data = file.readlines()
+    data[0] += 'git remote add origin {}\n'.format(git)
+    with open('update_origin.bat', 'w') as file:
+        file.writelines(data)
+    subprocess.call([r'update_origin.bat'])
 
-main = Tk()
-open_folder = Main(main)
-main.mainloop()
+if __name__ == '__main__':
+    main = Tk()
+    open_folder = Main(main)
+    main.mainloop()
 
 
