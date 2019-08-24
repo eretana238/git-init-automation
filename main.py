@@ -63,7 +63,7 @@ def create_project(frame, project_name):
 
     with open('update_origin.bat', 'r') as file:
         data = file.readlines()
-    data[0] += 'git remote add origin {}\n'.format(git)
+    data[0] = 'git remote add origin {}\n'.format(git)
     with open('update_origin.bat', 'w') as file:
         file.writelines(data)
     subprocess.call([r'update_origin.bat'])

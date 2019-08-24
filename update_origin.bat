@@ -1,3 +1,4 @@
+git remote add origin https://github.com/eretana238/test.git
 git remote add origin
 git remote add origin https://github.com/eretana238/test.git
 git add .
