@@ -12,6 +12,7 @@ Install all modules used in the software:
 ```
 pip install -r requirements.txt
 ```
+Create `txt` file with your github username on the first line and your password on the second line
 Lastly run `main.py` to start the software as demonstrated below:
 ```
 py main.py
