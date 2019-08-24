@@ -12,7 +12,7 @@ Install all modules used in the software:
 ```
 pip install -r requirements.txt
 ```
-Create `txt` file with your github username on the first line and your password on the second line. This will be used to naviate through the browser and login to github. *Don't worry, your login information will not be shared*
+Create `txt` file with your github username on the first line and your password on the second line. This will be used to naviate through the browser and login to github. *Will only be kept in your computer and will not be shared publicly*
 
 Lastly run `main.py` to start the software as demonstrated below:
 ```
