@@ -3,7 +3,6 @@ from tkinter import filedialog
 import os
 import subprocess
 import conn
-import time
 
 location = ''
 class Main(Frame):
@@ -33,6 +32,7 @@ class Main(Frame):
 
 
 def choose_folder():
+    global location
     folder = filedialog.askdirectory(parent=main,
                                      initialdir=os.getcwd(),
                                      title="Select projects folder:")
@@ -41,7 +41,7 @@ def choose_folder():
         data = file.readlines()
     # add directory
     data[0] = 'cd ' + folder + '\n'
-    location = data[0]
+    location = folder
     with open('create_folder.bat', 'w') as file:
         file.writelines(data)
 
@@ -59,11 +59,19 @@ def create_project(frame, project_name):
     # init project creation
     subprocess.call([r'create_folder.bat'])
     frame.destroy()
-    git = conn.browse('eretana238', 'ImAKnight61', project_name)
+
+    with open('login.txt', 'r') as text:
+        data = text.readlines()
+        username = data[0]
+        password = data[1]
+    git = conn.browse(username, password, project_name)
 
     with open('update_origin.bat', 'r') as file:
         data = file.readlines()
-    data[0] = '{} \n'.format(location)
+    location.replace('\n', '')
+    loc = 'cd ' + location + '/' + project_name + '\n'
+    print(loc)
+    data[0] = loc
     data[1] = 'git remote add origin {}\n'.format(git)
 
     with open('update_origin.bat', 'w') as file:
