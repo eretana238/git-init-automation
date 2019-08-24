@@ -5,7 +5,7 @@ import subprocess
 import conn
 import time
 
-
+location = ''
 class Main(Frame):
     def __init__(self, master, *args, **kwargs):
         Frame.__init__(self, master, *args, **kwargs)
@@ -41,7 +41,7 @@ def choose_folder():
         data = file.readlines()
     # add directory
     data[0] = 'cd ' + folder + '\n'
-
+    location = data[0]
     with open('create_folder.bat', 'w') as file:
         file.writelines(data)
 
@@ -63,8 +63,9 @@ def create_project(frame, project_name):
 
     with open('update_origin.bat', 'r') as file:
         data = file.readlines()
-    data[0] = 'cd ' + project_name + '\n'
+    data[0] = '{} \n'.format(location)
     data[1] = 'git remote add origin {}\n'.format(git)
+
     with open('update_origin.bat', 'w') as file:
         file.writelines(data)
     subprocess.call([r'update_origin.bat'])
